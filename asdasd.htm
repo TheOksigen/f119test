@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<button onclick="show()">OK</button>
+	<a href="indexasdas.htm:"></a>
+	
+	<script>
+		let DATA
+		function ok() {
+
+			fetch(`https://restcountries.com/v3.1/name/${window.location.href}`)
+			fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json")
+				.then(res => res.json())
+				.then(вфквфыв => DATA = вфквфыв)
+		}
+		ok()
+
+		function show() {
+			console.log(DATA)
+		}
+
+
+
+	</script>
+
+</body>
+
+</html>

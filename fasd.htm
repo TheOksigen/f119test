@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		
+		fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json")
+			.then(res => res.json())
+			.then(asdas => console.log(asdas))
+
+		async function selecet() {
+			const req = await fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json");
+			const data = await req.json()
+			//console.log(data)
+		}
+		selecet()
+	</script>
+</body>
+
+</html>

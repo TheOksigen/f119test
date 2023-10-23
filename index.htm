@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="output.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+		integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-slate-400">
+	<div class="w-100 flex justify-center items-center gap-5">
+		<div class="relative mt-2 rounded-md shadow-sm">
+			<input type="text" name="price" id="name" oninput="show()"
+				class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+				placeholder="Yemek adi yazin">
+			<div class="absolute inset-y-0 right-0 flex items-center">
+				<select id="select" name="currency" oninput="show()"
+					class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+				</select>
+			</div>
+		</div>
+
+
+
+		<button type="button" onclick="modal(true)"
+			class="inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class=" bi bi-cart"
+				viewBox="0 0 16 16">
+				<path
+					d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+			</svg>
+			<span id="num"
+				class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800  rounded-full"></span>
+		</button>
+	</div>
+	<!-- cards -->
+	<div class="flex gap-5 justify-center flex-wrap m-5 " id="cards"></div>
+	<!-- modal  -->
+	<div id="modals" class="m-auto relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="false">
+
+		<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+		<div class="fixed inset-0 overflow-hidden">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+					<div class="pointer-events-auto relative w-screen max-w-md">
+
+						<div class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
+							<button type="button"
+								class="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+								<span onclick="modal(false)" class="absolute -inset-2.5"></span>
+								<span class="sr-only">Close panel</span>
+								<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+									stroke="currentColor" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+						</div>
+
+						<div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+							<div class="px-4 sm:px-6">
+								<h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Sebet
+								</h2>
+							</div>
+							<div id="cardsContainer" class="relative mt-6 flex-1 px-4 sm:px-6">
+								<!-- Your content -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		const cards = document.querySelector("#cards");
+		const namee = document.querySelector("#name");
+		const select = document.querySelector("#select");
+
+		function show() {
+			fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json")
+				.then(res => res.json())
+				.then(data => {
+					cards.innerHTML = data?.data.food
+						.filter((item) => item.category.includes(select.value))
+						.filter((item) => item.name.includes(namee.value))
+						.map((item) => {
+							return `<div class="m-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+										<a href="#">
+											<img class="rounded-t-lg w-full max-h-[200px]" src="${item.img}" alt="" />
+											</a>
+										<div class="p-5">
+											<a href="#">
+												<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${item.name}</h5>
+											</a>
+											<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${item.composition}</p>
+											<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${item.category}</p>
+											<a onclick="buy(this)" data-item='${JSON.stringify(item)}'href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+											${item.price} AZN
+											</a>
+										</div>
+										</div>`;
+						})
+						.join('');
+				});
+		}
+		show();
+		async function selecet() {
+			const req = await fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json");
+			const data = await req.json();
+			select.innerHTML = data?.data.category.map((item) => `<option value="${item == "Bütün" ? "" : item}">${item}</option>`).join("")
+		}
+		selecet()
+
+		const modals = document.getElementById('modals');
+		const modal = (x = 0) => { modals.style.display = x ? 'block' : 'none' };
+		modal();
+
+		const cartArr = []
+		const cardsContainer = document.querySelector("#cardsContainer");
+		const num = document.querySelector("#num");
+
+		const buy = (x) => {
+			let secilmisData = [];
+			let t = 0
+			const itemData = JSON.parse(x.getAttribute('data-item'));
+			secilmisData = cartArr.find((item) => item.id == itemData.id)
+			if (secilmisData) { console.log(secilmisData), secilmisData.count++ }
+			else { cartArr.push({ count: ++t, ...itemData }) }
+			cardsContainer.innerHTML = ""
+			cartArr.map((item, index) => cardsContainer.innerHTML += `
+													<div id="toast-message-cta" class="my-2 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400" role="alert">
+														<div class="flex">
+															<img class="w-16 h-16 rounded-lg shadow-lg" src="${item.img}" alt="Jese Leos image"/>
+															<div class="ml-3 text-sm font-normal">
+																<span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">${item.name}</span>
+																<div class="mb-2 text-sm font-normal">${item.composition}</div> 
+																<nav aria-label="Page navigation example">
+																	<ul class="inline-flex -space-x-px text-sm">
+																		<li>
+																			<span onclick="decinc('1', '${index}')" class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">+</span>
+																		</li>   
+																		<li>
+																			<span id="a${index}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">${item.count}</span>
+																		</li>  
+																		<li>
+																		<span onclick="decinc('0', '${index}')" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">-</span>
+																		</li>
+																	</ul>
+																</nav>
+																</div>
+															<button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white justify-center items-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-message-cta" aria-label="Close">
+																<span class="sr-only">Close</span>
+																<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+																	<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+																</svg>
+															</button>
+														</div>
+														</div>
+														`)
+			num.innerHTML = cartArr.length
+		}
+
+		function decinc(x, y) {
+			const salam = document.querySelector(`#a${y}`)
+			let c = Number(x)
+			if (c) {
+				cartArr[y].count += c
+				salam.innerHTML = cartArr[y].count
+			} else {
+				cartArr[y].count-- == 0 ? cartArr[y].count = 0 : console.log("Salam")
+				salam.innerHTML = cartArr[y].count
+
+			}
+		}
+
+
+
+
+
+	
+
+
+
+	</script>
+</body>
+
+</html>

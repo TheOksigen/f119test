@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		async function main() {
+			console.log("Baslangic")
+			await task1()
+			await task2()
+			await task3()
+			console.log("Son")
+		}
+		async function task1() {
+			console.log("task 1 basladi")
+			await sleep(1000) // yuklenme 
+			console.log("task 1 bitdi")
+		}
+		async function task2() {
+			console.log("task 2 basladi")
+			await sleep(1000) // yuklenme 
+			console.log("task 2 bitdi")
+		}
+		async function task3() {
+			console.log("task 3 basladi")
+			await sleep(1000) // yuklenme 
+			console.log("task 3 bitdi")
+		}
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms))
+		}
+		main()
+
+		//fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json")
+		//	.then(res => res.json())
+		//	.then(data => console.log(data))
+
+
+		//async function ok() {
+		//	let res = await fetch("https://raw.githubusercontent.com/TheOksigen/purfect_data/main/yemekler.json")
+		//	let data = await res.json()
+		//	//console.log(data)
+		//}
+		//ok()
+
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>
